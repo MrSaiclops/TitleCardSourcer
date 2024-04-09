@@ -1,5 +1,5 @@
 # TitleCardSourcer
-A versitile python script for generating high quality and relevant source images for TCM to use.
+A versatile python script for generating high quality and relevant source images for TCM to use.
 <img src="https://github.com/MrSaiclops/TitleCardSourcer/assets/88596884/32c4d487-27b2-46b5-be60-058c946ceeb2" width="500" height="auto">
 
 ### The Problem
