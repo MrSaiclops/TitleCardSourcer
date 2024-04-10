@@ -49,9 +49,12 @@ file_queue = Queue()
 def log_missing(outfile, blur_values):
     rounded_blur_values = [round(value, 1) for value in blur_values]
     average_blur = sum(blur_values) / len(blur_values)
+    max_blur = max(blur_values)
     with lock:
         with open(missing_log, "a") as log_file:
-            log_file.write(f"{outfile} (blurriness: {', '.join(map(str, rounded_blur_values))}) avg {average_blur:.2f}\n")
+            log_file.write(f"{outfile} (blurriness: ")
+            log_file.write(", ".join([f"{value:.1f}" for value in rounded_blur_values]).ljust(50))
+            log_file.write(f") avg {average_blur:.2f} max {max_blur:.2f}\n")
 
 # Function to print colored text
 def print_colored(text, color):
