@@ -52,8 +52,8 @@ def log_missing(outfile, blur_values):
     max_blur = max(blur_values)
     with lock:
         with open(missing_log, "a") as log_file:
-            log_file.write(f"{outfile} (blurriness: ")
-            log_file.write(", ".join([f"{value:.1f}" for value in rounded_blur_values]).ljust(71))
+            log_file.write(f"{outfile:<10} (blurriness: ")
+            log_file.write(", ".join([f"{value:.1f}" for value in rounded_blur_values]).ljust(58))
             log_file.write(f") avg {average_blur:.2f} max {max_blur:.2f}\n")
 
 # Function to print colored text
@@ -87,7 +87,7 @@ def process_video():
                 # Generate the output file name
                 outfile = f"s{season}e{episode}.jpg"
                 if outfile in generated_thumbnails:
-                    print_colored(f"Thumbnail already exists for {outfile}. Skipping.", Fore.CYAN)
+                    print_colored(f"Thumbnail already exists for {outfile:<10} Skipping.", Fore.CYAN)
                     continue
                 # Attempt to generate a non-blurry thumbnail
                 attempt = 1
@@ -101,7 +101,7 @@ def process_video():
                         if blur_value < args.blur_threshold:  # Check against threshold
                             blur_values.append(blur_value)
                             os.remove(f"{os.path.join(outdir, outfile)}.tmp.jpg")  # Delete blurry image
-                            print_colored(f"Attempt {attempt}: Thumbnail is blurry ({blur_value:.2f}) for {outfile}.", Fore.YELLOW)
+                            print_colored(f"Attempt{attempt:>3}: Thumbnail is blurry ({blur_value:.2f}) for {outfile}.", Fore.YELLOW)
                             attempt += 1
                             offset += args.timegap  # Increment offset for next attempt
                             if attempt > args.attempts:
@@ -111,7 +111,7 @@ def process_video():
                             continue
                         else:
                             if blur_value > 500:  # Check if the blur value exceeds 500
-                                print_colored(f"Attempt {attempt}: Blur value too high ({blur_value:.2f}) for {outfile}. Likely a false positive.", Fore.YELLOW)
+                                print_colored(f"Attempt{attempt:>3}: Blur value too high ({blur_value:.2f}) for {outfile}. Likely a false positive.", Fore.YELLOW)
                                 os.remove(f"{os.path.join(outdir, outfile)}.tmp.jpg")  # Delete blurry image
                                 attempt += 1
                                 offset += args.timegap  # Increment offset for next attempt
@@ -125,7 +125,7 @@ def process_video():
                                 os.rename(f"{os.path.join(outdir, outfile)}.tmp.jpg", os.path.join(outdir, outfile))
                                 # Apply image enhancement using ImageMagick
                                 subprocess.run(['convert', os.path.join(outdir, outfile), '-channel', 'rgb', '-auto-level', os.path.join(outdir, outfile)])
-                                print_colored(f"Thumbnail generated and enhanced for {outfile} (Blur value: {blur_value:.2f}).", Fore.GREEN)
+                                print_colored(f"Thumbnail generated and enhanced for {outfile:<10} (Blur value: {blur_value:.2f}).", Fore.GREEN)
                                 break
                     except subprocess.CalledProcessError:
                         print_colored(f"Failed to generate thumbnail for {outfile}.", Fore.RED)
