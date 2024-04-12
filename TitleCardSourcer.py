@@ -100,8 +100,18 @@ def process_video():
                         blur_value = is_blurry(f"{os.path.join(outdir, outfile)}.tmp.jpg")
                         if blur_value < args.blur_threshold:  # Check against threshold
                             blur_values.append(blur_value)
+                            os.remove(f"{os.path.join(outdir, outfile)}.tmp.jpg")  # Delete blurry image
+                            print_colored(f"Attempt {attempt}: Thumbnail is blurry ({blur_value:.2f}) for {outfile}.", Fore.YELLOW)
+                            attempt += 1
+                            offset += args.timegap  # Increment offset for next attempt
+                            if attempt > args.attempts:
+                                print_colored(f"All attempts failed for {outfile}.", Fore.RED)
+                                log_missing(outfile, blur_values)
+                                break
+                            continue
+                        else:
                             if blur_value > 500:  # Check if the blur value exceeds 500
-                                print_colored(f"Blur value too high, likely a false positive. ({blur_value:.2f})", Fore.YELLOW)
+                                print_colored(f"Attempt {attempt}: Blur value too high ({blur_value:.2f}) for {outfile}. Likely a false positive.", Fore.YELLOW)
                                 os.remove(f"{os.path.join(outdir, outfile)}.tmp.jpg")  # Delete blurry image
                                 attempt += 1
                                 offset += args.timegap  # Increment offset for next attempt
@@ -117,15 +127,6 @@ def process_video():
                                 subprocess.run(['convert', os.path.join(outdir, outfile), '-channel', 'rgb', '-auto-level', os.path.join(outdir, outfile)])
                                 print_colored(f"Thumbnail generated and enhanced for {outfile} (Blur value: {blur_value:.2f}).", Fore.GREEN)
                                 break
-                        else:
-                            print_colored(f"Attempt {attempt}: Thumbnail is blurry ({blur_value:.2f}) for {outfile}.", Fore.YELLOW)
-                            attempt += 1
-                            offset += args.timegap  # Increment offset for next attempt
-                            if attempt > args.attempts:
-                                print_colored(f"All attempts failed for {outfile}.", Fore.RED)
-                                log_missing(outfile, blur_values)
-                                break
-                            continue
                     except subprocess.CalledProcessError:
                         print_colored(f"Failed to generate thumbnail for {outfile}.", Fore.RED)
                         log_missing(outfile, blur_values)
