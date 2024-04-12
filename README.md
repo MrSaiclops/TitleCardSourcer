@@ -1,6 +1,7 @@
 # TitleCardSourcer
 A versatile python script for generating high quality and relevant source images for TCM to use.
-<img src="https://github.com/MrSaiclops/TitleCardSourcer/assets/88596884/32c4d487-27b2-46b5-be60-058c946ceeb2" width="500" height="auto">
+<img src="https://github.com/MrSaiclops/TitleCardSourcer/assets/88596884/28776bdf-37bb-4903-8ae5-70cb89522c68" width="500" height="auto">
+
 
 ### The Problem
 TitleCardMaker is entering a new era with the WebUI becoming more robust. While I find it easy to achieve the effects I want with the overlay that TCM applies, I often feel that my source images are lacking. Plex offers one image based on the video file itself, and TMDB is dependant on user submissions. So there's little flexibility while remaining autonomous, especially if the media you're working with is more obscure (_Shockingly_, the same people lovingly curating frames from Breaking Bad are not putting the same effort toward The Real Housewives universe).
