@@ -95,7 +95,7 @@ def process_video():
                 blur_values = []
                 while attempt <= args.attempts:
                     try:
-                        subprocess.run(['ffmpeg', '-loglevel', 'quiet', '-hide_banner', '-ss', f'00:{offset//60:02d}:{offset%60:02d}', '-i', file_path, '-vf', f'thumbnail={args.quality}', '-vframes', '1', '-q:v', '2', f"{os.path.join(outdir, outfile)}.tmp.jpg"], check=True, stdin=subprocess.PIPE)
+                        subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'quiet', '-ss', f'00:{offset//60:02d}:{offset%60:02d}', '-i', file_path, '-vf', f'thumbnail={args.quality}', '-vframes', '1', '-q:v', '2', f"{os.path.join(outdir, outfile)}.tmp.jpg"], check=True, stdin=subprocess.PIPE)
                         # Check for blur
                         blur_value = is_blurry(f"{os.path.join(outdir, outfile)}.tmp.jpg")
                         blur_values.append(blur_value)
@@ -114,7 +114,7 @@ def process_video():
                             os.rename(f"{os.path.join(outdir, outfile)}.tmp.jpg", os.path.join(outdir, outfile))
                             # Apply image enhancement using ImageMagick
                             subprocess.run(['convert', os.path.join(outdir, outfile), '-channel', 'rgb', '-auto-level', os.path.join(outdir, outfile)])
-                            print_colored(f"Thumbnail generated and enhanced for {outfile}.", Fore.GREEN)
+                            print_colored(f"Thumbnail generated and enhanced for {outfile} (Blur value: {blur_value:.2f}).", Fore.GREEN)
                             break
                     except subprocess.CalledProcessError:
                         print_colored(f"Failed to generate thumbnail for {outfile}.", Fore.RED)
