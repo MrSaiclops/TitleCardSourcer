@@ -53,7 +53,7 @@ def log_missing(outfile, blur_values):
     with lock:
         with open(missing_log, "a") as log_file:
             log_file.write(f"{outfile} (blurriness: ")
-            log_file.write(", ".join([f"{value:.1f}" for value in rounded_blur_values]).ljust(50))
+            log_file.write(", ".join([f"{value:.1f}" for value in rounded_blur_values]).ljust(71))
             log_file.write(f") avg {average_blur:.2f} max {max_blur:.2f}\n")
 
 # Function to print colored text
