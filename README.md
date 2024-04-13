@@ -59,7 +59,7 @@ To process a series, navigate to the parent folder containing all of the ``Seaso
 ```console
 python3 /path/to/TitleCardSourcer.py
 ```
-It will then recursively enter each season folder and attempt to create a titlecard from all video files therein. If one is found eligible, (For a basic run that means it's over the bluriness threshold of 100) it will be saved in the newly created ``thumbs`` directory that's stored in the parent folder Upon completion you can use ``cat ./thumbs/missing.txt`` to review which episodes failed and make changed for a subsequent run.
+It will then recursively enter each season folder and attempt to create a titlecard from all video files therein. If one is found eligible, (For a basic run that means it's over the blurriness threshold of 100) it will be saved in the newly created ``thumbs`` directory that's stored in the parent folder Upon completion you can use ``cat ./thumbs/missing.txt`` to review which episodes failed and make changes for a subsequent run.
 
 ### Modifiers
 Below are the modifiers that can be used to refine your search for a good titlecard:
@@ -68,6 +68,6 @@ Below are the modifiers that can be used to refine your search for a good titlec
 | Quality | -q, --quality | 100 | The # of frames for FFmpeg to inspect for the most "representitive" Generally speaking, a higher value here will yield clearer frames Higher numbers also yield more RAM usage, See: [FFmpeg docs](https://ffmpeg.org/ffmpeg-filters.html#thumbnail) |
 | Attempts | -a, --attempts | 10 | The number of times to try an episode before giving up and printing the results to ``missing.txt`` |
 | Timegap | -t, --timegap | 30 | The space to put between each attempt in the video. A default run checks in 30 second increments from 6 min in the video to 11 min |
-| Blur Threshold | -b, --blur_threshold | 100 | The threshold at which point to accept or deny a proposed titlecard.  Lower values means blurrier. Depending on the resolution and file format have different average values. Audit ``missing.txt`` after a mostly failed run to determine the threshold that your subsequent run should have  |
+| Blur Threshold | -b, --blur_threshold | 100 | **Can not exceed 500.** The threshold at which point to accept or deny a proposed titlecard.  Lower values means blurrier. Depending on the resolution and file format have different average values. Audit ``missing.txt`` after a mostly failed run to determine the threshold that your subsequent run should have  |
 | Start Time | -s, --start_time | 6 | The time in the video file to begin grabbing from. For some shows (I'm looking at your Desperate Housewives), the credits continue popping up in the lower third for the first 10 minutes, in which case you want to move your start time later out to prevent having random names in the titlecard |
 | Remove Bars | -l --remove_bars | N/A | Applies ``imagemagick mogrify -bordercolor black -fuzz 20% -trim`` to the titlecard to remove letter/pillar boxing  |
