@@ -22,7 +22,7 @@ If I can do it, so can you!
 ### Prerequisites
 *  Python3.x
 *  FFmpeg
-*  ImageMagick (Comes in requirements.txt)
+*  ImageMagick
 
 ### Steps (Using a [tteck](https://tteck.github.io/Proxmox/) Ubuntu/Debian installion as an example)
 1. Install prerequisites
